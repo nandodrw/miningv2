@@ -1,0 +1,21 @@
+{
+  "name": "miningv2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nandodrw/miningv2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nandodrw/miningv2/issues"
+  },
+  "homepage": "https://github.com/nandodrw/miningv2"
+}
