@@ -1,0 +1,372 @@
+@import "variables"
+
+/* app css stylesheet */
+html
+  // background: url(../img/background.jpg) no-repeat center center fixed
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  -o-background-size: cover
+  background-size: cover
+
+.menu
+  list-style: none
+  border-bottom: 0.1em solid $total-black
+  margin-bottom: 2em
+  padding: 0 0 0.5em
+
+.menu:before
+  content: "["
+
+.menu:after
+  content: "]"
+
+.menu > li
+  display: inline
+
+.menu > li:before
+  content: "|"
+  padding-right: 0.3em
+
+.menu > li:nth-child(1):before
+  content: ""
+  padding: 0
+
+/*general*/
+
+a
+  font-size: 110% !important
+
+/*Top bar*/
+
+.top-bar
+  margin-top: 0.4em
+  margin-right: 0.4em
+  margin-left: 0.4em
+  padding-right: 0.8em
+  width: 100%
+  display: fixed
+
+
+.navbar
+  background : #edaa15 !important
+  color: white
+
+.navbar-brand
+  color: white !important
+  font-size: 200%
+
+.fb-button
+  padding-top: 0.8em
+
+
+/*left menu*/
+
+.liked-menu
+  height: 90%
+  width: 100%
+  // background: rgba(255, 255, 255, 0.64) !important
+
+.left-menu
+  margin-left: 0.4em
+  float: left
+  width: 27%
+  text-align: center
+  position: fixed
+  bottom: 0.3em
+  top: 4.5em
+  background: rgba(238, 169, 23, 0.52) !important
+
+.selection-menu
+  margin-right: 3px
+  margin-left: 3px
+  margin-bottom: 3px
+  overflow: scroll
+  flex: 1
+
+.menu-left
+  width: 48%
+  float: left
+
+.menu-right
+  width: 48%
+  float: right
+
+.menu-top
+  width: 100%
+
+.menu-filter-query, .filter-query-bar
+  width: 100%
+
+.menu-filter-query
+  margin-top: 3em
+  // display: initial !important
+  // height: 34px !important
+
+.filter-query-bar
+  margin-top: 1em
+
+.tool_box
+  margin-top: 0.3em
+  margin-left: 0.3em
+  height: 100%
+  width: 98.5%
+  display: flex
+  flex-direction: column
+  background: $transparent-white !important
+
+.fix-panel
+  margin-bottom: 0.3em !important
+
+.panel-body a
+  margin-top: 0.2em
+
+.tools-call-action
+  margin-top: 0.3em
+  height: 8%
+  width: 98.5%
+  margin-left: 0.3em
+
+.fix-call-action
+  width: 100%
+  text-align: center
+  padding-top: 1em
+  padding-left: 0.3em
+  padding-right: 0.3em
+  padding-bottom: 1em
+  background: $dirty-gold-trans
+
+.fix-call-action .btn-group button:hover
+  color: $dirty-gold !important
+  background-color: black !important
+
+
+.call-action-buttons
+  font-size: 160%
+  margin-top: 0.5em
+  margin-bottom: 0.5em
+
+.call-action-buttons span
+  margin-right: 2em
+  margin-left: 2em
+
+.info-section
+  float: right
+  width: 71.5%
+  margin-right: 0.7%
+  margin-top: 4.5em
+
+.fan-page
+  cursor: pointer
+  padding: .2em .6em .3em
+  font-weight: bold
+  line-height: 1
+  text-align: center
+  background-color: white
+  border: 1px solid
+  border-color: $weird-pink
+  border-top-right-radius: 4px
+  border-bottom-right-radius: 4px
+
+.fan-page:hover
+  background-color: $cool-gray
+  color: $dirty-gold
+
+.fan-page:active
+  background-color: $even-more-ligth-gray
+  color: $cool-yellow
+
+.fan-page-selected
+  background-color: $total-black
+  color: white
+
+.selection-menu ul
+  padding: 0 0 0 0 !important
+  margin: 0 0 !important
+
+.selection-menu li
+  margin-top: 0.5em
+  margin-bottom: 0.5em
+  list-style-type: none
+
+.info-section li
+  margin-left: 2em
+  list-style-type: none
+  text-align: center
+
+.stad-label
+  font-size: 120%
+  background-color: $ligth-gray
+  color: $total-black
+
+.link-label
+  font-size: 120%
+
+.fb-loging-button
+  font-size: 130%
+  cursor: pointer
+  padding: 4px 4px
+  border-radius: 5px
+  background: black
+
+.fb-loging-button:hover
+  color: $dirty-gold
+  background: white
+  // border-radius:2px
+
+// .btn-group .btn
+//   color: $blue-complementary !important
+//   background:$dirty-gold
+//
+
+.btn-group .btn
+  color: black !important
+  background: white
+
+// modal window
+.modal-dialog
+  display : table !important
+
+.modal-close-bar
+  text-align: left
+  height: 5px
+  background-color: $ligth-black
+  background: $ligth-black
+  color: white
+  width: 100%
+  display: inline-table
+  cursor: pointer
+
+.modal-close-bar:hover
+  color: $dirty-gold
+
+.modal-close-bar i
+  margin-left: 0.3em
+
+.modal-content
+  width: 100%
+  border: 2px solid $ligth-black
+  background: $ligth-black
+  color: white
+
+/* enable absolute positioning */
+.inner-addon
+  position: relative
+
+// fix search bar style
+
+
+.menu-right .inner-addon
+  height: 34px
+
+/* style icon */
+.inner-addon .glyphicon
+  color: rgba(166, 166, 166, 1) !important
+  position: absolute
+  padding: 10px
+  pointer-events: none
+
+/* align icon */
+.left-addon .glyphicon
+  left: 0px
+.right-addon .glyphicon
+  right: 0px
+
+/* add padding  */
+.left-addon input
+  padding-left: 30px
+.right-addon input
+  padding-right: 30px
+
+.spinner
+  width: 100px
+  height: 100px
+  margin: 100px auto
+  background-color: $total-black
+
+  border-radius: 100%
+  -webkit-animation: scaleout 1.0s infinite ease-in-out
+  animation: scaleout 1.0s infinite ease-in-out
+
+.spinner2
+  width: 100px
+  height: 100px
+  margin: 100px auto
+  background-color: white
+
+  border-radius: 100%
+  -webkit-animation: scaleout 1.0s infinite ease-in-out
+  animation: scaleout 1.0s infinite ease-in-out
+
+
+@-webkit-keyframes scaleout
+  0%
+    -webkit-transform: scale(0.0)
+  100%
+    -webkit-transform: scale(1.0)
+    opacity: 0
+
+
+@keyframes scaleout
+  0%
+    transform: scale(0.0)
+    -webkit-transform: scale(0.0)
+  100%
+    transform: scale(1.0)
+    -webkit-transform: scale(1.0)
+    opacity: 0
+
+
+.conf_button
+  color: $total-black !important
+  // border-radius: 3px
+
+.centered
+  position: fixed
+  top: 50%
+  left: 65%
+  margin-top: -50px
+  margin-left: -100px
+
+.clickeable
+  cursor: pointer
+  text-decoration: none
+  color: white !important
+
+.clickeable:hover
+  color: black !important
+  text-decoration: none
+
+.clickeable-info
+  cursor: pointer
+  text-decoration: none
+  color: white !important
+
+.clickeable-info:hover
+  color: $dirty-gold !important
+  text-decoration: none
+
+
+.clickeable-menu
+  cursor: pointer
+  text-decoration: none
+  color: black !important
+
+.clickeable-menu:hover
+  color: $dirty-gold !important
+  text-decoration: none
+
+
+
+.main-button
+  color: black !important
+
+.main-button:hover
+  color: $dirty-gold !important
+  background-color: white
+
+
+
+.nav .active a
+  background: black !important
+  color: white !important
+
