@@ -2,11 +2,10 @@
 
 angular.module('startMining', [
   'ngRoute',
-  // 'home',
   // 'facebookInfoService',
   // 'facebookHandleService',
   // 'facebookInfoToShow',
-  // 'ui.bootstrap',
+  'ui.bootstrap',
   // 'infinite-scroll',
   // 'userExperienceFlags',
   // 'angular-intro'
@@ -20,10 +19,9 @@ angular.module('startMining', [
 // }]);
 
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: 'homeController'});
-  // $routeProvider.when('/privacy', {templateUrl: 'partials/privacy.html', controller: 'homeController'});
-  $routeProvider.otherwise({redirectTo: '/home'});
-     // $sceProvider.enabled(false);
+  $routeProvider.when('/', {templateUrl: 'partials/home.html', controller: 'homeController'});
+  $routeProvider.when('/privacy', {templateUrl: 'partials/privacy.html', controller: 'homeController'});
+  $routeProvider.otherwise({redirectTo: '/'});
 }]);
 
 // function DropdownCtrl($scope) {
