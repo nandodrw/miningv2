@@ -26,7 +26,10 @@
           </ul>
           <ul class="navbar-right">
             <li class="fb-button">
-              <facebook-loging></facebook-loging>
+              <div class='fb-loging-button' ng-click="loginRoutine()" ng-intro-options="IntroOptions">
+                <!-- <i class="fa fa-facebook-square"></i> -->
+                {{buttonMessage}}
+              </div>
             </li>
           </ul>
       </div>
@@ -38,10 +41,10 @@
     <!-- <info-section info="sortShowCriteria"></info-section> -->
   <!-- </div> -->
 
-  <!-- user menu -->
-  <!-- <div class="left-menu panel panel-default"> -->
-    <!-- <div class="liked-menu"><user-menu></user-menu></div> -->
+  user menu
+  <div class="left-menu panel panel-default">
+    <div class="liked-menu"><user-menu></user-menu></div>
     <!-- <div class="tools-call-action"><user-tools></user-tools></div> -->
-  <!-- </div> -->
+  </div>
 
 </div>

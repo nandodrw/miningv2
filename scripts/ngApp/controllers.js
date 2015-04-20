@@ -3,25 +3,65 @@
 /* Controllers */
 
 // home.controller('homeController',['$scope','$rootScope','FbFilterInfo',function($scope,$rootScope,FbFilterInfo){
-angular.module('startMining').controller('homeController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+angular.module('startMining').controller('homeController', ['$scope', '$rootScope', 'FbHandler',
+  function ($scope, $rootScope, FbHandler) {
+
+  $scope.buttonMessage = 'Log In';
+  $scope.userStatus = 'out';
+
+  // initialize Facebook SDK and check Login status
+  FbHandler.initialize({
+    appId: '708887532519678',
+    version: 'v2.3',
+    xfbml: false,
+    status: false
+  }).then(function(){
+    return FbHandler.getLoginStatus();
+  }).then(function(response){
+    if(response.status.localeCompare('connected') === 0){
+      $scope.buttonMessage = 'Log Out';
+      FbHandler.sharedInfo.userStatus = 'in';
+    } else {
+      $scope.buttonMessage = 'Log In';
+      FbHandler.sharedInfo.userStatus = 'out';
+    }
+  });
+
+  // login logic
+  $scope.loginRoutine = function() {
+
+    if(FbHandler.sharedInfo.userStatus.localeCompare('in') === 0){
+      $scope.buttonMessage = 'Log In';
+      FbHandler.sharedInfo.userStatus = 'out';
+      FbHandler.logout();
+    } else  {
+      FbHandler.login().then(function(response){
+        $scope.buttonMessage = 'Log Out';
+        FbHandler.sharedInfo.userStatus = 'in';
+      });
+    }
+  }
 
   $scope.sortShowCriteria = {
     sortCriteria : 'none',
     filterCriteria : ''
-  }
-  this.setSortCriteria = function(criteria){
+  };
+
+  $scope.setSortCriteria = function(criteria){
     $scope.sortShowCriteria.sortCriteria = criteria;
   };
-  this.getFilterStatus = function(tag){
+  $scope.getFilterStatus = function(tag){
     if($scope.sortShowCriteria.sortCriteria == tag){
       return "active";
     } else { return "";}
   };
-  this.hideTag = function(){
+  $scope.hideTag = function(){
     // if(FbFilterInfo.showCriteria.typeContent == 'photos'){
     //   return true
     // }
   };
+
+
 }]);
 
 // home.controller('ModalCtrl',function ($scope, $modal, $log) {

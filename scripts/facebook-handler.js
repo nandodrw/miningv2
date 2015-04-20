@@ -10,14 +10,38 @@
 
 
 
-  function initialize (obj, callback) {
+  function initialize(obj, callback) {
       if(obj.appId  && obj.version){
         window.fbAsyncInit = callback;
-        $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+        $.getScript('//connect.facebook.net/en_US/sdk/debug.js', function(){
           FB.init(obj);
       });
     }
-  };
+  }
+
+  function checkLoginState(callback){
+    FB.getLoginStatus(function(response) {
+      if(callback){
+        callback(response);
+      }
+    }, true);
+  }
+
+  function logout(callback){
+    FB.logout(function(response){
+      if(callback){
+        callback(response);
+      }
+    });
+  }
+
+  function login(callback, param){
+    FB.login(function(response){
+      if(callback){
+        callback(response);
+      }
+    }, param);
+  }
 
   function callFbGraph (fbQuery, callback){
     FB.api(fbQuery, function (response) {
@@ -116,14 +140,6 @@
     }
   };
 
-  function checkLoginState (callback){
-    FB.getLoginStatus(function(response) {
-      console.log('where is failling:',response);
-      FBhandler.status = FBhandler.statusChangeCallback(response);
-      if(callback){callback(response);};
-    });
-  };
-
   function callMe () {
     return FBauxiliar.callFbGraph("/me");
   };
@@ -163,6 +179,9 @@
   // defining global object
   window.FBhandler = {};
   window.FBhandler.initialize = initialize;
+  window.FBhandler.checkLoginState = checkLoginState;
+  window.FBhandler.logout = logout;
+  window.FBhandler.login = login;
 
 })();
 

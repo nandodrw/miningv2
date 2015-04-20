@@ -1,0 +1,96 @@
+<div class='tool_box panel panel-default'>
+  <div>
+    <div class='panel-heading'><a class='btn btn-default btn-sm conf_button main-button' ng-click='menu.getInitialInfo()'><span class="glyphicon glyphicon-tower"></span> Get account infomation</a></div>
+
+    <div class="panel-body">
+      <div class='menu-left'>
+
+        <div ng-controller="DropdownCtrl">
+          <div class="btn-group" dropdown is-open="status.isopen">
+            <button type="button" class="btn btn-default dropdown-toggle conf_button clickeable-menu">
+              <span class="glyphicon glyphicon-unchecked"></span> Selection <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-click="menu.selectAll()"><a class="clickeable-menu"><span class="glyphicon glyphicon-check"></span> Select all</a></li>
+              <li ng-click="menu.unselectAll()"><a class="clickeable-menu"><span class="glyphicon glyphicon-remove"></span> Unselect all</a></li>
+              <li ng-click="menu.reverseSelection()"><a class="clickeable-menu"><span class="glyphicon glyphicon-adjust"></span> Reverse selection</a></li>
+            </ul>
+          </div>
+          <br>
+        </div>
+
+
+
+
+      </div>
+      <div class='menu-right'>
+
+        <div ng-controller="DropdownCtrl">
+          <div class="btn-group" dropdown is-open="status.isopen">
+            <button type="button" class="btn btn-default dropdown-toggle conf_button clickeable-menu">
+              <span class="glyphicon glyphicon-signal"></span> Sort  <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-click="menu.orderProp='name'" ><a class="clickeable-menu"><span class="glyphicon glyphicon-bookmark"></span> Name</a></li>
+              <li ng-click="menu.orderProp='-likes'"><a class="clickeable-menu"><span class="glyphicon glyphicon-thumbs-up"></span> More liked</a></li>
+              <li ng-click="menu.orderProp='likes'"><a class="clickeable-menu"><span class="glyphicon glyphicon-thumbs-down"></span> Less liked</a></li>
+            </ul>
+          </div>
+          <br>
+        </div>
+
+
+
+      </div>
+
+      <div class='menu-filter-query'>
+        <div class="inner-addon right-addon">
+          <span class="glyphicon glyphicon-search"></span>
+          <input class="form-control filter-query-bar" placeholder="Look for liked content..." ng-model="query">
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="selection-menu well">
+
+    <div ng-show='usabilityFlags.callingLikes' class="spinner"></div>
+
+    <ul class="">
+      <li ng-repeat='page in likedPages | filter:query | orderBy:menu.orderProp' ng-click='menu.addAnalizeScope(page)'>
+        <div class="row">
+
+          <div class="input-group">
+            <span class="input-group-addon">
+
+                <input type="checkbox" ng-model='page.selected'>
+
+            </span>
+            <div class = 'fan-page' ng-class="menu.addClassFanPage(page.selected)">
+                Name: {{page.name}} Likes: {{page.likes}}
+                <br>
+                Category: {{page.category}}
+            </div>
+          </div>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div  class="panel panel-default fix-panel" id='filter-criteria'>
+  <div class='fix-call-action'>
+    <div class="btn-group btn-group-justified" id='type-content'>
+      <div class="btn-group">
+        <button ng-disabled="usabilityFlags.loadingInfo" type="button" class ="btn btn-default" ng-click="tools.cleanData()" > <span class="glyphicon glyphicon-refresh"></span> Clean</a>
+      </div>
+      <div class="btn-group">
+        <button ng-disabled="usabilityFlags.loadingInfo" type="button" class ="btn btn-default" ng-click="tools.saveContentType('photos')"><span class="glyphicon glyphicon-camera"></span> Photos</a>
+      </div>
+      <div class="btn-group">
+        <button ng-disabled="usabilityFlags.loadingInfo" type="button" class ="btn btn-default" ng-click="tools.saveContentType('feed')" > <span class="glyphicon glyphicon-th"></span> Posted</a>
+      </div>
+    </div>
+  </div>
+</div>

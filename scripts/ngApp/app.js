@@ -5,7 +5,7 @@ angular.module('startMining', [
   // 'facebookInfoService',
   // 'facebookHandleService',
   // 'facebookInfoToShow',
-  'ui.bootstrap',
+  'ui.bootstrap'
   // 'infinite-scroll',
   // 'userExperienceFlags',
   // 'angular-intro'
