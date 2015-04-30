@@ -178,7 +178,7 @@ angular.module('startMining').factory('FbService', ['$q', function($q){
 
   function getLikedContent(){
     var deferred = $q.defer();
-    FBhandler.getLikedContent(function(response){
+    FBhandler.feedAllLikedContent(function(response){
       deferred.resolve(response);
     });
     return deferred.promise;

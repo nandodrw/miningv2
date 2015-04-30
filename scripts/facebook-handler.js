@@ -50,28 +50,56 @@
     });
   }
 
-  function pagingLikes (url_get,callback) {
+  function feedAllLikedContent(callback){
 
-  var me = this;
+    var pointer = {
+      data: []
+    };
 
-    if(url_get){
-      $.ajax(
+    getLikedContent(function(response){
+      if(pointer &&
+        response.likes &&
+        response.likes.paging &&
+        response.likes.paging.next){
 
-          {
-            url : url_get,
-            success : function(response){
-              FBhandler.likeList = FBhandler.likeList.concat(response.data);
-              me.pagingLikes(response.paging.next,callback);
-            },
-            error : function(message){
-              if(me.callback){me.callback({error : message});}
-            }
+        recursivePageCall(response.likes.paging.next, callback, pointer);
+
+      } else {
+        if(pointer && response.likes.data){
+          for(var i = 0; i < response.likes.data.length; i++){
+            pointer.data.push(response.likes.data[i]);
           }
-        );
-    }else{
-      if(callback){callback({success : 'success'});}
+        }
+        callback(pointer)
+      }
+    });
+  }
+
+  function recursivePageCall(url, callback, pointer){
+    var requestCall = new XMLHttpRequest();
+    requestCall.open('GET',url);
+    requestCall.onload = function(response){
+      if(response.target.response) {
+        var newData = JSON.parse(response.target.response);
+        if(newData.data){
+          for (var i = newData.data.length - 1; i >= 0; i--) {
+            pointer.data.push(newData.data[i]);
+          };
+        }
+        if(newData.paging && newData.paging.next) {
+          recursivePageCall(newData.paging.next, callback, pointer);
+        } else {
+          if(pointer){
+            pointer.filled = true;
+            callback(pointer);
+          }
+        }
+      } else {
+        callback(pointer);
+      }
     }
-  };
+    requestCall.send();
+  }
 
   function storeFeed (node,feed){
     if (FBhandler.likedFeed[node]){
@@ -181,6 +209,7 @@
   window.FBhandler.logout = logout;
   window.FBhandler.login = login;
   window.FBhandler.getLikedContent = getLikedContent;
+  window.FBhandler.feedAllLikedContent = feedAllLikedContent;
 
 })();
 
