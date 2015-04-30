@@ -134,7 +134,7 @@
 //     }
 // };
 
-angular.module('startMining').factory('FbHandler', ['$q', function($q){
+angular.module('startMining').factory('FbService', ['$q', function($q){
 
   var sharedInfo = {
     userStatus: 'out'
@@ -173,10 +173,15 @@ angular.module('startMining').factory('FbHandler', ['$q', function($q){
     FBhandler.logout(function(response){
       deferred.resolve(response);
     });
+    return deferred.promise;
   }
 
-  function getLikeList(){
+  function getLikedContent(){
     var deferred = $q.defer();
+    FBhandler.getLikedContent(function(response){
+      deferred.resolve(response);
+    });
+    return deferred.promise;
   }
 
   return {
@@ -184,7 +189,8 @@ angular.module('startMining').factory('FbHandler', ['$q', function($q){
     initialize: initialize,
     login: login,
     logout: logout,
-    getLoginStatus: getLoginStatus
+    getLoginStatus: getLoginStatus,
+    getLikedContent: getLikedContent
   };
 
 }]);

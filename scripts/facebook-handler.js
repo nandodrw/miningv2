@@ -43,20 +43,12 @@
     }, param);
   }
 
-  function getLikedPages(callback){
-    var route = "";
-
-    FB.api()
-  }
-
-  function callFbGraph (fbQuery, callback){
-    FB.api(fbQuery, function (response) {
-        if(callback){
-          callback(response)
-        }
-        return response;
+  function getLikedContent(callback){
+    var route = '/me?fields=likes{id,name,category,likes}';
+    FB.api(route, 'get', function(response) {
+      callback(response);
     });
-  };
+  }
 
   function pagingLikes (url_get,callback) {
 
@@ -188,6 +180,7 @@
   window.FBhandler.checkLoginState = checkLoginState;
   window.FBhandler.logout = logout;
   window.FBhandler.login = login;
+  window.FBhandler.getLikedContent = getLikedContent;
 
 })();
 

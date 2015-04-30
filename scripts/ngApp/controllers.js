@@ -3,41 +3,47 @@
 /* Controllers */
 
 // home.controller('homeController',['$scope','$rootScope','FbFilterInfo',function($scope,$rootScope,FbFilterInfo){
-angular.module('startMining').controller('homeController', ['$scope', '$rootScope', 'FbHandler',
-  function ($scope, $rootScope, FbHandler) {
+angular.module('startMining').controller('homeController', ['$scope', '$rootScope', 'FbService',
+  function ($scope, $rootScope, FbService) {
 
   $scope.buttonMessage = 'Log In';
   $scope.userStatus = 'out';
 
   // initialize Facebook SDK and check Login status
-  FbHandler.initialize({
+  FbService.initialize({
     appId: '708887532519678',
     version: 'v2.3',
     xfbml: false,
     status: false
   }).then(function(){
-    return FbHandler.getLoginStatus();
+    return FbService.getLoginStatus();
   }).then(function(response){
     if(response.status.localeCompare('connected') === 0){
       $scope.buttonMessage = 'Log Out';
-      FbHandler.sharedInfo.userStatus = 'in';
+      FbService.sharedInfo.userStatus = 'in';
+      return FbService.getLikedContent();
     } else {
       $scope.buttonMessage = 'Log In';
-      FbHandler.sharedInfo.userStatus = 'out';
+      FbService.sharedInfo.userStatus = 'out';
+      return false;
     }
+  }).then(function(likesCotent){
+      if(likesCotent){
+        console.log(likesCotent);
+      }
   });
 
   // login logic
   $scope.loginRoutine = function() {
 
-    if(FbHandler.sharedInfo.userStatus.localeCompare('in') === 0){
+    if(FbService.sharedInfo.userStatus.localeCompare('in') === 0){
       $scope.buttonMessage = 'Log In';
-      FbHandler.sharedInfo.userStatus = 'out';
-      FbHandler.logout();
+      FbService.sharedInfo.userStatus = 'out';
+      FbService.logout();
     } else  {
-      FbHandler.login().then(function(response){
+      FbService.login().then(function(response){
         $scope.buttonMessage = 'Log Out';
-        FbHandler.sharedInfo.userStatus = 'in';
+        FbService.sharedInfo.userStatus = 'in';
       });
     }
   }
