@@ -85,16 +85,16 @@ function userMenuController ($scope, $rootScope, FbFilterInfo, FbHandlerService,
 };
 
 
-// angular.module('startMining').directive('userMenu',function(){
-//   return {
-//     restrict: 'E',
-//     transclude: true,
-//     templateUrl:'partials/user-menu.html',
-//     controller:
-//       ['$scope', '$rootScope', 'FbFilterInfo', 'FbHandlerService', 'UXflags', userMenuController],
-//     controllerAs: 'menu'
-//   };
-// });
+angular.module('startMining').directive('userMenu',function(){
+  return {
+    restrict: 'E',
+    transclude: true,
+    templateUrl:'partials/user-menu.html',
+    controller:
+      ['$scope', '$rootScope', 'FbFilterInfo', 'FbHandlerService', 'UXflags', userMenuController],
+    controllerAs: 'menu'
+  };
+});
 
 // home.directive('userTools',function(){
 //   return{

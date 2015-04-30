@@ -175,6 +175,10 @@ angular.module('startMining').factory('FbHandler', ['$q', function($q){
     });
   }
 
+  function getLikeList(){
+    var deferred = $q.defer();
+  }
+
   return {
     sharedInfo: sharedInfo,
     initialize: initialize,

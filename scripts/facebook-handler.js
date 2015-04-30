@@ -43,6 +43,12 @@
     }, param);
   }
 
+  function getLikedPages(callback){
+    var route = "";
+
+    FB.api()
+  }
+
   function callFbGraph (fbQuery, callback){
     FB.api(fbQuery, function (response) {
         if(callback){
