@@ -101,6 +101,19 @@
     requestCall.send();
   }
 
+  function getNodePostedContent(node, callback) {
+
+    var routeP1 = '/' + node + '?fields=feed.fields';
+    var routeP2 = '(id,message, link,name, description, picture,';
+    var routeP3 = 'type, shares, likes.fields(id).limit(1).summary(true),';
+    var routeP4 = 'comments.fields(id).limit(1).summary(true))';
+    var route = routeP1 + routeP2 + routeP3 + routeP4;
+
+    FB.api(route, 'get', function(response){
+      callback(response);
+    });
+  }
+
   function storeFeed (node,feed){
     if (FBhandler.likedFeed[node]){
       FBhandler.likedFeed[node].data = FBhandler.likedFeed[node].data.concat(feed.data);
@@ -210,6 +223,7 @@
   window.FBhandler.login = login;
   window.FBhandler.getLikedContent = getLikedContent;
   window.FBhandler.feedAllLikedContent = feedAllLikedContent;
+  window.FBhandler.getNodePostedContent = getNodePostedContent;
 
 })();
 
