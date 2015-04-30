@@ -1,7 +1,7 @@
 'use strict';
 
 
-function userMenuController ($scope, $rootScope, FbFilterInfo, FbHandlerService, UXflags) {
+function userMenuControllerOld ($scope, $rootScope, FbFilterInfo, FbHandlerService, UXflags) {
   $scope.usabilityFlags = UXflags.flags;
   this.orderProp = 'name';
 
@@ -84,15 +84,22 @@ function userMenuController ($scope, $rootScope, FbFilterInfo, FbHandlerService,
 
 };
 
+function userMenuController($scope, sharedData){
+  $scope.menuInfo = {
+    data : sharedData.data
+  }
+
+
+  console.log('loaded controller???');
+}
 
 angular.module('startMining').directive('userMenu',function(){
   return {
     restrict: 'E',
-    transclude: true,
+    transclude: false,
     templateUrl:'partials/user-menu.html',
     controller:
-      ['$scope', '$rootScope', 'FbFilterInfo', 'FbHandlerService', 'UXflags', userMenuController],
-    controllerAs: 'menu'
+      ['$scope', 'sharedData', userMenuController]
   };
 });
 

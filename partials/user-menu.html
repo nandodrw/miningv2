@@ -5,7 +5,7 @@
     <div class="panel-body">
       <div class='menu-left'>
 
-        <div ng-controller="DropdownCtrl">
+        <div>
           <div class="btn-group" dropdown is-open="status.isopen">
             <button type="button" class="btn btn-default dropdown-toggle conf_button clickeable-menu">
               <span class="glyphicon glyphicon-unchecked"></span> Selection <span class="caret"></span>
@@ -25,7 +25,7 @@
       </div>
       <div class='menu-right'>
 
-        <div ng-controller="DropdownCtrl">
+  <!--       <div ng-controller="DropdownCtrl">
           <div class="btn-group" dropdown is-open="status.isopen">
             <button type="button" class="btn btn-default dropdown-toggle conf_button clickeable-menu">
               <span class="glyphicon glyphicon-signal"></span> Sort  <span class="caret"></span>
@@ -37,7 +37,7 @@
             </ul>
           </div>
           <br>
-        </div>
+        </div> -->
 
 
 
@@ -56,26 +56,34 @@
 
     <div ng-show='usabilityFlags.callingLikes' class="spinner"></div>
 
-    <ul class="">
-      <li ng-repeat='page in likedPages | filter:query | orderBy:menu.orderProp' ng-click='menu.addAnalizeScope(page)'>
+
+    <ul>
+
+      <!-- <li ng-repeat='listItem in menuInfo.data.menuList.data | filter:query | orderBy:menu.orderProp' ng-click='menu.addAnalizeScope(listItem)'> -->
+
+      <li ng-repeat='listItem in menuInfo.data.menuList.data' ng-click='menu.addAnalizeScope(listItem)'>
+
         <div class="row">
 
           <div class="input-group">
             <span class="input-group-addon">
 
-                <input type="checkbox" ng-model='page.selected'>
+                <input type="checkbox" ng-model='listItem.selected'>
 
             </span>
-            <div class = 'fan-page' ng-class="menu.addClassFanPage(page.selected)">
-                Name: {{page.name}} Likes: {{page.likes}}
+            <div class = 'fan-page' ng-class="menu.addClassFanPage(listItem.selected)">
+                Name: {{listItem.name}} Likes: {{listItem.likes}}
                 <br>
-                Category: {{page.category}}
+                Category: {{listItem.category}}
             </div>
           </div>
 
         </div>
       </li>
+
     </ul>
+
+
   </div>
 </div>
 

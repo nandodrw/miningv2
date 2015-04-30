@@ -3,21 +3,26 @@
 /* Controllers */
 
 // home.controller('homeController',['$scope','$rootScope','FbFilterInfo',function($scope,$rootScope,FbFilterInfo){
-angular.module('startMining').controller('homeController', ['$scope', '$rootScope', 'FbService',
-  function ($scope, $rootScope, FbService) {
+angular.module('startMining').controller('homeController', ['$scope', '$rootScope', 'FbService', 'sharedData',
+  function ($scope, $rootScope, FbService, sharedData) {
 
   $scope.buttonMessage = 'Log In';
   $scope.userStatus = 'out';
 
   // initialize Facebook SDK and check Login status
   FbService.initialize({
+
     appId: '708887532519678',
     version: 'v2.3',
     xfbml: false,
     status: false
+
   }).then(function(){
+
     return FbService.getLoginStatus();
+
   }).then(function(response){
+
     if(response.status.localeCompare('connected') === 0){
       $scope.buttonMessage = 'Log Out';
       FbService.sharedInfo.userStatus = 'in';
@@ -27,10 +32,16 @@ angular.module('startMining').controller('homeController', ['$scope', '$rootScop
       FbService.sharedInfo.userStatus = 'out';
       return false;
     }
+
   }).then(function(likesCotent){
+
       if(likesCotent){
-        console.log(likesCotent);
+
+        sharedData.data.menuList = likesCotent;
+        console.log(sharedData.data);
+
       }
+
   });
 
   // login logic

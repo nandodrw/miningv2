@@ -134,6 +134,16 @@
 //     }
 // };
 
+angular.module('startMining').factory('sharedData', [function(){
+
+  return {
+    data: {
+      menuList: {}
+    }
+  }
+
+}]);
+
 angular.module('startMining').factory('FbService', ['$q', function($q){
 
   var sharedInfo = {

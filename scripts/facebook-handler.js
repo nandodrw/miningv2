@@ -200,6 +200,7 @@
   };
 
   function getFeedNextPage (node,callback){
+
     if(FBhandler.likedFeed[node].paging.next){
       $.get(FBhandler.likedFeed[node].paging.next,function(response){
         if(response.error){
@@ -213,6 +214,7 @@
 
       });
     } else {return false};
+
   };
 
   // defining global object
