@@ -62,6 +62,40 @@ angular.module('startMining').factory('FbService', ['$q', function($q){
     return deferred.promise;
   }
 
+  function setContentMetadata(content){
+    for (var i = content.length - 1; i >= 0; i--) {
+      // comments metadata
+      if(content[i].comments &&
+        content[i].comments.summary &&
+        content[i].comments.summary.total_count){
+
+        content[i].commentsCount = content[i].comments.summary.total_count;
+
+      } else {
+        content[i].commentsCount = 0;
+      }
+      // likes metadata
+      if(content[i].likes &&
+        content[i].likes.summary &&
+        content[i].likes.summary.total_count){
+
+        content[i].likesCount = content[i].likes.summary.total_count;
+
+      } else {
+        content[i].likesCount = 0;
+      }
+      // shares metadata
+      if(content[i].shares &&
+        content[i].shares.count){
+
+        content[i].sharesCount = content[i].shares.count;
+
+      } else {
+        content[i].sharesCount = 0;
+      }
+    };
+  }
+
   return {
     sharedInfo: sharedInfo,
     initialize: initialize,
