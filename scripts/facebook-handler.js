@@ -101,32 +101,45 @@
     requestCall.send();
   }
 
-  function getNodePostedContent(node, callback) {
-
+  function buildNodeRequest(node){
     var routeP1 = '/' + node + '?fields=feed.fields';
     var routeP2 = '(id,message, link,name, description, picture,';
     var routeP3 = 'type, shares, likes.fields(id).limit(1).summary(true),';
     var routeP4 = 'comments.fields(id).limit(1).summary(true))';
-    var route = routeP1 + routeP2 + routeP3 + routeP4;
+    return routeP1 + routeP2 + routeP3 + routeP4;
+  }
+
+  function getNodePostedContent(node, callback) {
+
+    var route = buildNodeRequest(node)
 
     FB.api(route, 'get', function(response){
       callback(response);
     });
   }
 
-  function storeFeed (node,feed){
-    if (FBhandler.likedFeed[node]){
-      FBhandler.likedFeed[node].data = FBhandler.likedFeed[node].data.concat(feed.data);
-      FBhandler.likedFeed[node].paging = feed.paging;
-    } else {FBhandler.likedFeed[node] = feed;}
-  };
+  function  callNodesContent(nodes, callback){
+    var callArray = []
+    for (var i = nodes.length - 1; i >= 0; i--) {
+      callArray.push({
+        method: 'get',
+        relative_url: buildNodeRequest(nodes[i])
+      });
+    };
 
-  function storePhotos (node,photos){
-    if (FBhandler.likedPhotos[node]){
-      FBhandler.likedPhotos[node].data = FBhandler.likedPhotos[node].data.concat(photos.data);
-      FBhandler.likedPhotos[node].paging = photos.paging;
-    } else {FBhandler.likedPhotos[node] = photos;}
-  };
+    var params = {
+      batch: JSON.stringify(callArray)
+    }
+
+    FB.api('/', 'post', params, function(response){
+      for(var i in response){
+        if(response[i].body){
+          response[i].body = JSON.parse(response[i].body);
+        }
+      }
+      callback(response);
+    });
+  }
 
   function addMetaData (data,type){
     if(type == 'feed'){
@@ -204,7 +217,6 @@
     if(FBhandler.likedFeed[node].paging.next){
       $.get(FBhandler.likedFeed[node].paging.next,function(response){
         if(response.error){
-
           if(callback){callback(response);}
         }else{
           FBauxiliar.addMetaData(response.data,'feed');
@@ -226,6 +238,7 @@
   window.FBhandler.getLikedContent = getLikedContent;
   window.FBhandler.feedAllLikedContent = feedAllLikedContent;
   window.FBhandler.getNodePostedContent = getNodePostedContent;
+  window.FBhandler.callNodesContent = callNodesContent;
 
 })();
 
