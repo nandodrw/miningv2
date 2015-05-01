@@ -1,6 +1,5 @@
 <div class='tool_box panel panel-default'>
   <div>
-    <div class='panel-heading'><a class='btn btn-default btn-sm conf_button main-button' ng-click='menu.getInitialInfo()'><span class="glyphicon glyphicon-tower"></span> Get account infomation</a></div>
 
     <div class="panel-body">
       <div class='menu-left'>
@@ -61,7 +60,7 @@
 
       <!-- <li ng-repeat='listItem in menuInfo.data.menuList.data | filter:query | orderBy:menu.orderProp' ng-click='menu.addAnalizeScope(listItem)'> -->
 
-      <li ng-repeat='listItem in menuInfo.data.menuList.data' ng-click='menu.addAnalizeScope(listItem)'>
+      <li ng-repeat='listItem in menuInfo.data.menuList.data' ng-click='addAnalizeScope(listItem)'>
 
         <div class="row">
 
@@ -71,7 +70,7 @@
                 <input type="checkbox" ng-model='listItem.selected'>
 
             </span>
-            <div class = 'fan-page' ng-class="menu.addClassFanPage(listItem.selected)">
+            <div class = 'fan-page' ng-class="addSelectedClass(listItem.selected)">
                 Name: {{listItem.name}} Likes: {{listItem.likes}}
                 <br>
                 Category: {{listItem.category}}

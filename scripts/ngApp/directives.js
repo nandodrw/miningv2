@@ -88,9 +88,23 @@ function userMenuController($scope, sharedData){
   $scope.menuInfo = {
     data : sharedData.data
   }
+  $scope.addAnalizeScope = function(listItem){
+    if($scope.menuInfo.data.analizeScope[listItem.id]){
+      delete $scope.menuInfo.data.analizeScope[listItem.id];
+      listItem.selected = false;
+    } else {
+      $scope.menuInfo.data.analizeScope[listItem.id] = true;
+      listItem.selected = true;
+    }
+  }
 
-
-  console.log('loaded controller???');
+  $scope.addSelectedClass = function(selectedFlag){
+    if(selectedFlag){
+      return 'fan-page-selected';
+    } else {
+      return '';
+    }
+  }
 }
 
 angular.module('startMining').directive('userMenu',function(){
