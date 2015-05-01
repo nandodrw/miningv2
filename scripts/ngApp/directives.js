@@ -85,16 +85,31 @@ function userMenuControllerOld ($scope, $rootScope, FbFilterInfo, FbHandlerServi
 };
 
 function userMenuController($scope, sharedData){
+
   $scope.menuInfo = {
     data : sharedData.data
   }
+
+  var maxAnalyzeScopeSize = 30;
+  var analyzeScopeCount = 0;
+
   $scope.addAnalizeScope = function(listItem){
     if($scope.menuInfo.data.analizeScope[listItem.id]){
+
       delete $scope.menuInfo.data.analizeScope[listItem.id];
       listItem.selected = false;
+      analyzeScopeCount--;
+
     } else {
+
       $scope.menuInfo.data.analizeScope[listItem.id] = true;
-      listItem.selected = true;
+      if(!(analyzeScopeCount >= maxAnalyzeScopeSize)){
+        listItem.selected = true;
+        analyzeScopeCount++;
+      } else {
+        // To do
+      }
+
     }
   }
 
