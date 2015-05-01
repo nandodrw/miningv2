@@ -118,6 +118,18 @@
     });
   }
 
+
+  function batchCall(params, callback){
+    FB.api('/', 'post', params, function(response){
+      for(var i in response){
+        if(response[i].body){
+          response[i].body = JSON.parse(response[i].body);
+        }
+      }
+      callback(response);
+    });
+  }
+
   function  callNodesContent(nodes, callback){
     var callArray = [];
     for (var i = nodes.length - 1; i >= 0; i--) {
@@ -130,14 +142,7 @@
       batch: JSON.stringify(callArray),
       include_headers: false
     }
-    FB.api('/', 'post', params, function(response){
-      for(var i in response){
-        if(response[i].body){
-          response[i].body = JSON.parse(response[i].body);
-        }
-      }
-      callback(response);
-    });
+    batchCall(params, callback);
   }
 
   function callNodesPagingLinks(urls, callback){
@@ -152,14 +157,7 @@
       batch: JSON.stringify(callArray),
       include_headers: false
     }
-    FB.api('/', 'post', params, function(response){
-      // for(var i in response){
-      //   if(response[i].body){
-      //     response[i].body = JSON.parse(response[i].body);
-      //   }
-      // }
-      callback(response);
-    });
+    batchCall(params, callback);
   }
 
   function addMetaData (data,type){
