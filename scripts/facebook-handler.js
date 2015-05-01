@@ -119,24 +119,45 @@
   }
 
   function  callNodesContent(nodes, callback){
-    var callArray = []
+    var callArray = [];
     for (var i = nodes.length - 1; i >= 0; i--) {
       callArray.push({
         method: 'get',
         relative_url: buildNodeRequest(nodes[i])
       });
     };
-
     var params = {
-      batch: JSON.stringify(callArray)
+      batch: JSON.stringify(callArray),
+      include_headers: false
     }
-
     FB.api('/', 'post', params, function(response){
       for(var i in response){
         if(response[i].body){
           response[i].body = JSON.parse(response[i].body);
         }
       }
+      callback(response);
+    });
+  }
+
+  function callNodesPagingLinks(urls, callback){
+    var callArray = [];
+    for (var i = urls.length - 1; i >= 0; i--) {
+      callArray.push({
+        method: 'get',
+        relative_url: urls[i].replace(/((https:\/\/graph.facebook.com)+(\/v[0-9].[0-9]\/))/g, '')
+      });
+    };
+    var params = {
+      batch: JSON.stringify(callArray),
+      include_headers: false
+    }
+    FB.api('/', 'post', params, function(response){
+      // for(var i in response){
+      //   if(response[i].body){
+      //     response[i].body = JSON.parse(response[i].body);
+      //   }
+      // }
       callback(response);
     });
   }
@@ -239,6 +260,7 @@
   window.FBhandler.feedAllLikedContent = feedAllLikedContent;
   window.FBhandler.getNodePostedContent = getNodePostedContent;
   window.FBhandler.callNodesContent = callNodesContent;
+  window.FBhandler.callNodesPagingLinks = callNodesPagingLinks;
 
 })();
 
