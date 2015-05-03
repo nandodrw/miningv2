@@ -6,6 +6,9 @@
 angular.module('startMining').controller('homeController', ['$scope', '$rootScope', 'FbService', 'sharedData',
   function ($scope, $rootScope, FbService, sharedData) {
 
+  // link shared data
+  $scope.contentData = sharedData.data;
+
   $scope.buttonMessage = 'Log In';
   $scope.userStatus = 'out';
 

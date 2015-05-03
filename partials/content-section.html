@@ -1,0 +1,32 @@
+<div class="row">
+
+  <div class="col-md-4" ng-repeat="post in contentInfo.content | filter:info.filterCriteria | orderBy:info.sortCriteria:true track by $index">
+
+    {{post}}
+    <!-- <div class="fb-post" data-href={{post.link}} data-width="500"></div> -->
+    <!-- <div class="thumbnail">
+      <img ng-src="{{post.picture}}">
+      <div class="caption">
+        <h3>{{post.name}}</h3>
+        <h2>Type: {{post.type}}</h2>
+
+        <p>{{post.message}}</p>
+        <p>
+          <span class="label label-default stad-label"><span class="glyphicon glyphicon-thumbs-up"></span> {{post.likes_count}}</span>
+          <span class="label label-default stad-label"><span class="glyphicon glyphicon-comment"></span> {{post.comments_count}}</span>
+          <span class="label label-default stad-label"><span class="glyphicon glyphicon-send"></span> {{post.shares_count}}</span>
+
+          <div  ng-controller="ModalCtrl">
+              <span ng-show="post.type == 'photo'" class="label label-default link-label clickeable-info" ng-click="open(post.link)"><i class="fa fa-cube"></i> Preview</span>
+
+              <span ng-show="post.type == 'video'" class="label label-default link-label clickeable-info" ng-click="open(post.link,true)"><i class="fa fa-cube"></i> Preview</span>
+
+              <span class="label label-default link-label clickeable-info" ><a class="clickeable-info" ng-href="{{post.link}}" target="_blank"><i class="fa fa-cubes"></i> Source</a></span>
+
+          </div>
+
+        </p>
+      </div>
+    </div> -->
+  </div>
+</div>

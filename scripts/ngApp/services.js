@@ -6,7 +6,8 @@ angular.module('startMining').factory('sharedData', [function(){
   return {
     data: {
       menuList: {},
-      analizeScope: {}
+      analizeScope: {},
+      content: {}
     }
   }
 
@@ -94,6 +95,39 @@ angular.module('startMining').factory('FbService', ['$q', function($q){
         content[i].sharesCount = 0;
       }
     };
+    return content;
+  }
+
+  function getContent(analizeScope){
+    var nodes = [];
+    for(var i in analizeScope){
+      nodes.push(i)
+    }
+    var deferred = $q.defer();
+    FBhandler.callNodesContent(nodes, function(response){
+      if(response.error){
+        deferred.reject(response);
+      } else {
+        var content = {};
+        for (var i = response.length - 1; i >= 0; i--) {
+          if(response[i].code === 200){
+            content[response[i].body.id] = {
+              feed: setContentMetadata(response[i].body.feed.data)
+            }
+            if(response[i].body.feed.paging &&
+              response[i].body.feed.paging.next){
+
+              content[response[i].body.id].nextPage = response[i].body.feed.paging.next;
+
+            } else {
+              content[response[i].body.id].nextPage = undefined;
+            }
+          }
+        };
+        deferred.resolve(content);
+      }
+    });
+    return deferred.promise;
   }
 
   return {
@@ -102,20 +136,8 @@ angular.module('startMining').factory('FbService', ['$q', function($q){
     login: login,
     logout: logout,
     getLoginStatus: getLoginStatus,
-    getLikedContent: getLikedContent
+    getLikedContent: getLikedContent,
+    getContent: getContent
   };
 
 }]);
-
-// var userExperienceFlags =angular.module('userExperienceFlags',[]);
-
-// userExperienceFlags.factory('UXflags',function(){
-//     return {
-//       flags : {
-//         enableInfiniteScroll : true,
-//         loadingInfo : false,
-//         callingLikes : false
-//       }
-//     };
-//   }
-// );

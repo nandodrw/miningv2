@@ -1,90 +1,10 @@
 'use strict';
 
+/*
+ *  User menu
+ */
 
-function userMenuControllerOld ($scope, $rootScope, FbFilterInfo, FbHandlerService, UXflags) {
-  $scope.usabilityFlags = UXflags.flags;
-  this.orderProp = 'name';
-
-  this.getInitialInfo = function(){
-    FbHandlerService.checkLoginState().
-      then(function(status){
-        $scope.usabilityFlags.callingLikes = true;
-        $rootScope.userStatus= status;
-        console.log("happening?? status:",$rootScope.userStatus);
-        if($rootScope.userStatus == 'connected'){
-          FbHandlerService.getUserLikePages().
-            then(function(list){
-              $scope.usabilityFlags.callingLikes = false;
-              $scope.likedPages = list.data;
-            },function(err){
-              $scope.usabilityFlags.callingLikes = false;
-              alert('the following error apears:' + err.result);
-            });
-        } else {
-          $scope.likedPages = [];
-          FbFilterInfo.analizeScope = {};
-          alert('please log in first');
-        }
-      });
-  };
-
-  this.addAnalizeScope = function(page){
-    console.log('sort criterias',this.orderProp);
-    if(FbFilterInfo.analizeScope[page.id]){
-       FbFilterInfo.analizeScope[page.id] = false;
-       delete page.selected
-       delete FbFilterInfo.analizeScope[page.id];
-       $scope.$watch($scope.likedPages = FBhandler.likeList)
-    } else {
-      FbFilterInfo.analizeScope[page.id] = true;
-      page.selected = true;
-      $scope.$watch($scope.likedPages = FBhandler.likeList);
-    }
-  };
-
-  this.selectAll = function(){
-    FbFilterInfo.analizeScope = {};
-    if($scope.likedPages){
-      angular.forEach($scope.likedPages, function(value, key) {
-        value.selected = true;
-        FbFilterInfo.analizeScope[value.id] = true;
-      });
-    }
-    console.log('FbFilterInfo',FbFilterInfo);
-  };
-
-  this.unselectAll = function(){
-    FbFilterInfo.analizeScope = {};
-    if($scope.likedPages){
-      angular.forEach($scope.likedPages, function(value, key) {
-        value.selected = false;
-      });
-    }
-  };
-
-  this.reverseSelection = function(){
-    FbFilterInfo.analizeScope = [];
-    if($scope.likedPages){
-      angular.forEach($scope.likedPages, function(value, key) {
-        if(value.selected){
-          value.selected = false;
-        }  else {
-          value.selected = true;
-          FbFilterInfo.analizeScope[value.id] = true;
-        }
-      });
-    }
-  };
-
-  this.addClassFanPage = function(selection){
-    if(selection){
-      return 'fan-page-selected';
-    }
-  }
-
-};
-
-function userMenuController($scope, sharedData){
+function userMenuController($scope, sharedData, FbService){
 
   $scope.menuInfo = {
     data : sharedData.data
@@ -120,6 +40,14 @@ function userMenuController($scope, sharedData){
       return '';
     }
   }
+
+  $scope.getContent = function(){
+    FbService.getContent($scope.menuInfo.data.analizeScope).
+    then(function(content){
+      sharedData.data.content = content;
+    });
+  }
+
 }
 
 angular.module('startMining').directive('userMenu',function(){
@@ -128,92 +56,28 @@ angular.module('startMining').directive('userMenu',function(){
     transclude: false,
     templateUrl:'partials/user-menu.html',
     controller:
-      ['$scope', 'sharedData', userMenuController]
+      ['$scope', 'sharedData', 'FbService', userMenuController]
   };
 });
 
-// home.directive('userTools',function(){
-//   return{
-//     restrict: 'E',
-//     transclude: true,
-//     templateUrl:'partials/user-tools.html',
-//     scope : {},
-//     controller:
-//       ['$scope',
-//       '$rootScope',
-//       'FbFilterInfo',
-//       'FbHandlerService',
-//       'FbInfoToShow',
-//       'UXflags',
-//       '$q',
-//       '$timeout',
-//       function($scope,
-//         $rootScope,
-//         FbFilterInfo,
-//         FbHandlerService,
-//         FbInfoToShow,
-//         UXflags,
-//         $q,
-//         $timeout)
-//       {
+/*
+ *  Content section
+ */
 
-//         $scope.usabilityFlags = UXflags.flags;
-//         $scope.contentHolder = FbInfoToShow;
-//         var that = this;
+function contentSectionController($scope, sharedData){
+  $scope.contentInfo = sharedData.data;
 
-//         this.getData = function(){
-//           var arrayPromises = [[]];
-//           var aux = 0;
-//           angular.forEach(FbFilterInfo.analizeScope,function(value,key){
-//             if (arrayPromises[aux].length >=5) {
-//               aux = aux + 1;
-//               arrayPromises[aux] = [];
-//             };
-//             if(FbFilterInfo.typeContent == 'feed'){
-//               arrayPromises[aux].push(FbHandlerService.getNodeFeed(key));
-//               // arrayPromises.push(FbHandlerService.getNodeFeed(key));
-//             } else {
-//               // aux.push(FbHandlerService.getNodePhotos(key));
-//               arrayPromises[aux].push(FbHandlerService.getNodePhotos(key));
-//             };
-//             setTimeout(function(){console.log('works??????and value and key',value,key);},9000);
-//           });
-//           // console.log('arrayPromises',arrayPromises);
-//           // angular.forEach(arrayPromises,function(value_arr_pro,key){
-//           //   var contentCalls = $q.all(value_arr_pro);
-//           //   contentCalls
-//           //   .then(function(contents){
-//           //       angular.forEach(contents,function(value,key){
-//           //         $scope.contentHolder.contentToShow = $scope.contentHolder.contentToShow.concat(value);
-//           //         console.log('Info to show',FbInfoToShow.contentToShow);
-//           //       });
-//           //       $scope.usabilityFlags.loadingInfo = false;
-//           //     }, function(error,node){
-//           //       console.log('Error message: ', error, 'in node: ' + node);
-//           //       $scope.usabilityFlags.loadingInfo = false;
-//           //     },function(update){
-//           //       console.log('exploring update message:',update);
-//           //     });
-//           //   setTimeout(function(){
+}
 
-//           //   }, 3000);
-//           // });
-//         };
-
-//         this.saveContentType = function(type){
-//           $scope.contentHolder.contentToShow = [];
-//           FbFilterInfo.typeContent = type;
-//           that.getData();
-//           $scope.usabilityFlags.loadingInfo = true;
-//         };
-
-//         this.cleanData = function(){
-//           $scope.contentHolder.contentToShow = [];
-//         }
-//       }],
-//     controllerAs:'tools'
-//   };
-// });
+angular.module('startMining').directive('contentSection',function(){
+  return {
+    restrict: 'E',
+    transclude: false,
+    templateUrl:'partials/content-section.html',
+    controller:
+      ['$scope', 'sharedData', contentSectionController]
+  };
+});
 
 // home.directive('infoSection',function(){
 //   return {
